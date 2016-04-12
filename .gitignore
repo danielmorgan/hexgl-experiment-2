@@ -1,4 +1,4 @@
+.idea
 node_modules
+dist
 npm-debug.log
-build.css
-build.js

@@ -4,7 +4,7 @@ import PIXI from 'pixi.js';
 import $ from 'jquery';
 import Stats from 'stats.js';
 
-import Test from './Test';
+import Map from './Map';
 
 class Bootstrapper {
     constructor() {
@@ -19,8 +19,11 @@ class Bootstrapper {
         this.$container.append(this.stats.dom);
 
         this.entities = [
-            new Test()
+            new Map()
         ];
+        this.entities.forEach(e => {
+            this.stage.addChild(e.getDisplayObject())
+        });
 
         this.bindEvents();
         this.update();
