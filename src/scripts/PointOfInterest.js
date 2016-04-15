@@ -1,5 +1,7 @@
 'use strict';
 
+import PIXI from 'pixi.js';
+
 export default class PointOfInterest {
     constructor(name = 'Foo Keep',
         type = 'Castle',
@@ -7,5 +9,9 @@ export default class PointOfInterest {
         this.name = name;
         this.type = type;
         this.description = description;
+
+        this.displayObject = new PIXI.Graphics();
+        this.displayObject.lineStyle(2, 0x000000, 1);
+        this.displayObject.drawCircle(0, 0, 60);
     }
 }

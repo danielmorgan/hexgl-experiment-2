@@ -11,10 +11,9 @@ class Bootstrapper {
         this.$container = $('#container');
         this.stage = new PIXI.Container();
         this.renderer = new PIXI.autoDetectRenderer(window.innerWidth, window.innerHeight, {
-            backgroundColor: 0xd6cca9
+            backgroundColor: 0xffffff
         });
         this.stats = new Stats();
-
         this.$container.append(this.renderer.view);
         this.$container.append(this.stats.dom);
 
@@ -53,8 +52,10 @@ class Bootstrapper {
         this.renderer.render(this.stage);
         this.stats.end();
 
+        console.log('update');
         requestAnimationFrame(this.update.bind(this));
     }
 }
 
-new Bootstrapper();
+window.app = new Bootstrapper();
+console.log(app);
