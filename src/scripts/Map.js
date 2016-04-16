@@ -1,22 +1,21 @@
 'use strict';
 
 import PIXI from 'pixi.js';
-import Entity from './Entity';
-import Generator from './Generator';
+import PointOfInterest from './PointOfInterest';
 
-export default class Map extends Entity {
+export default class Map {
     constructor() {
-        super();
-
         this.displayObject = new PIXI.Container();
-        this.points = Generator.generatePOIs(3);
 
-        this.points.forEach((point) => {
-            let coords = Generator.pixelCoordinates(60);
-            let noise = Generator.noise(coords.x, coords.y, 50, 50);
-            this.displayObject.addChild(noise);
-            this.displayObject.cacheAsBitmap;
-        });
+        this.poi = new PointOfInterest();
+        this.resize();
+
+        this.displayObject.addChild(this.poi.displayObject);
+    }
+
+    resize() {
+        this.poi.displayObject.x = (window.innerWidth / 2) - (this.poi.displayObject.width / 2);
+        this.poi.displayObject.y = (window.innerHeight / 2) - (this.poi.displayObject.height / 2);
     }
 
     update() {

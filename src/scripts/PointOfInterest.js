@@ -1,17 +1,13 @@
 'use strict';
 
 import PIXI from 'pixi.js';
+import Generator from './Generator';
 
 export default class PointOfInterest {
-    constructor(name = 'Foo Keep',
-        type = 'Castle',
-        description = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.') {
+    constructor(name = 'Foo Keep', type = 'Castle', description) {
         this.name = name;
         this.type = type;
         this.description = description;
-
-        this.displayObject = new PIXI.Graphics();
-        this.displayObject.lineStyle(2, 0x000000, 1);
-        this.displayObject.drawCircle(0, 0, 60);
+        this.displayObject = new PIXI.Sprite(PIXI.loader.resources['castle'].texture);
     }
 }
