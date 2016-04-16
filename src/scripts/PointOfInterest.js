@@ -8,6 +8,7 @@ export default class PointOfInterest {
         this.name = name;
         this.type = type;
         this.description = description;
-        this.displayObject = new PIXI.Sprite(PIXI.loader.resources['castle'].texture);
+        this.displayObject = new PIXI.Sprite(Generator.sprite());
+        this.displayObject.width = this.displayObject.height = 200;
     }
 }

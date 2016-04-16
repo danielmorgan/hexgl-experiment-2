@@ -3,11 +3,16 @@
 import PIXI from 'pixi.js';
 
 export default class Generator {
-    static pixelCoordinates(size = 0) {
-        return {
-            x: this._randomInt(0, window.innerWidth - size / 2),
-            y: this._randomInt(0, window.innerHeight - size / 2)
-        }
+    static sprite() {
+        let key = Object.keys(PIXI.loader.resources)[this._randomInt(0, Object.keys(PIXI.loader.resources).length)];
+        return PIXI.loader.resources[key].texture;
+    }
+    
+    static coordinates(size = 0) {
+        return new PIXI.Point(
+            this._randomInt(0, window.innerWidth - size / 2),
+            this._randomInt(0, window.innerHeight - size / 2)
+        );
     }
 
     static height() {

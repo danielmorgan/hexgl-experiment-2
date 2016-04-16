@@ -18,6 +18,7 @@ class Bootstrapper {
         this.$container.append(this.stats.dom);
 
         PIXI.loader.add('castle', 'img/castle.png');
+        PIXI.loader.add('forest', 'img/forest.png');
 
         this.bindEvents();
     }

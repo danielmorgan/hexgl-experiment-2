@@ -2,20 +2,22 @@
 
 import PIXI from 'pixi.js';
 import PointOfInterest from './PointOfInterest';
+import Generator from './Generator';
 
 export default class Map {
     constructor() {
         this.displayObject = new PIXI.Container();
 
-        this.poi = new PointOfInterest();
-        this.resize();
-
-        this.displayObject.addChild(this.poi.displayObject);
+        for (let i = 0; i < 3; i++) {
+            let poi = new PointOfInterest();
+            let coord = Generator.coordinates(500);
+            poi.displayObject.x = coord.x;
+            poi.displayObject.y = coord.y;
+            this.displayObject.addChild(poi.displayObject);
+        }
     }
 
     resize() {
-        this.poi.displayObject.x = (window.innerWidth / 2) - (this.poi.displayObject.width / 2);
-        this.poi.displayObject.y = (window.innerHeight / 2) - (this.poi.displayObject.height / 2);
     }
 
     update() {
