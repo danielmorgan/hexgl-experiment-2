@@ -8,17 +8,15 @@ var gulp        = require('gulp'),
     rename      = require('gulp-rename'),
     browserSync = require('browser-sync').create(),
     clean       = require('gulp-clean'),
-    assign      = require('lodash.assign'),
-    source      = require('vinyl-source-stream'),
-    buffer      = require('vinyl-buffer'),
     watchify    = require('watchify'),
-    gutil       = require('gulp-util');
+    buffer      = require('vinyl-buffer'),
+    assign      = require('lodash.assign');
 
 var paths = {
     src: './src/',
     dist: './dist/',
 
-    scriptsEntrypoint: './src/scripts/index.js',
+    scriptsEntryPoint: './src/scripts/index.js',
     stylesEntryPoint: './src/styles/index.scss',
 
     imageDir: 'img/',
@@ -29,27 +27,25 @@ var paths = {
     images: 'img/**/*'
 };
 
-// Watchify/browserify script building stuff for faster builds
-var opts = assign({}, watchify.args, {
-    entries: [paths.scriptsEntrypoint],
-    debug: false
-});
-var b = watchify(browserify(opts).transform(babelify.configure({ presets: ['es2015'] })));
-b.on('update', bundle); // on any dep update, runs the bundler
-b.on('log', gutil.log); // output build logs to terminal
-function bundle() {
-    return b.bundle()
-        .on('error', gutil.log.bind(gutil, 'Browserify Error'))
-        .pipe(source('build.js'))
-        .pipe(buffer()) // optional, remove if you don't need to buffer file contents
-        .pipe(sourcemaps.init({ loadMaps: true }))
-        .pipe(sourcemaps.write('./'))
+
+gulp.task('scripts', ['clean-scripts'], function() {
+    return gulp.src(paths.scriptsEntryPoint)
+        .pipe(plumber())
+        .pipe(through2.obj(function(file, enc, next) {
+            browserify(file.path, assign({ debug: true }, watchify.args))
+                .plugin(watchify, { ignoreWatch: ['**/node_modules/**'] })
+                .transform('babelify', { presets: ['es2015'] })
+                .bundle(function(err, res) { if (err) { return next(err); } file.contents = res; next(null, file); });
+        }))
+        .on('error', function (error) {
+            console.log(error.stack);
+            this.emit('end')
+        })
+        .pipe(buffer())
+        .pipe(rename('build.js'))
         .pipe(gulp.dest(paths.dist))
         .pipe(browserSync.stream());
-}
-
-
-gulp.task('scripts', ['clean-scripts'], bundle);
+});
 gulp.task('clean-scripts', function() {
     return gulp.src([paths.dist + 'build.js', paths.dist + 'build.js.map'], { read: false })
         .pipe(plumber())
