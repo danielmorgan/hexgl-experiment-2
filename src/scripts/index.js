@@ -26,6 +26,11 @@ class Bootstrapper {
 
     bindEvents() {
         $(window).on('resize', this.resize.bind(this));
+        $(window).on('keypress', e => {
+           if (e.keyCode === 104) {
+               $(this.stats.dom).toggle();
+           }
+        });
         PIXI.loader.load(() => {
             this.setupScene();
             this.update();

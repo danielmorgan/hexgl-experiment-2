@@ -10,9 +10,6 @@ export default class Map {
 
         for (let i = 0; i < 3; i++) {
             let poi = new PointOfInterest();
-            let coord = Generator.coordinates(500);
-            poi.displayObject.x = coord.x;
-            poi.displayObject.y = coord.y;
             this.displayObject.addChild(poi.displayObject);
         }
     }
