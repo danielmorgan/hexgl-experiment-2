@@ -10,8 +10,8 @@ export default class Generator {
     
     static coordinates(size = 0) {
         return new PIXI.Point(
-            this._randomInt(0, window.innerWidth - size / 2),
-            this._randomInt(0, window.innerHeight - size / 2)
+            this._randomInt(size, window.innerWidth - size),
+            this._randomInt(size, window.innerHeight - size)
         );
     }
 
@@ -41,7 +41,6 @@ export default class Generator {
     }
 
     static _randomInt(min = 0, max = 1) {
-        let int = Math.floor(Math.random() * max - min);
-        return int;
+        return Math.floor(Math.random() * max) + min;
     }
 }

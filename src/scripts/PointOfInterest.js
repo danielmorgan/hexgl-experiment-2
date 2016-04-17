@@ -10,7 +10,12 @@ export default class PointOfInterest {
         this.description = description;
         this.displayObject = new PIXI.Sprite(Generator.sprite());
         this.displayObject.width = this.displayObject.height = 200;
-        this.displayObject.x = Generator.coordinates().x;
-        this.displayObject.y = Generator.coordinates().y;
+
+        this.place();
+    }
+
+    place() {
+        this.displayObject.x = Generator.coordinates(this.displayObject.width).x;
+        this.displayObject.y = Generator.coordinates(this.displayObject.height).y;
     }
 }
