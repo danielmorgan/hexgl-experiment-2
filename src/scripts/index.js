@@ -19,6 +19,7 @@ class Bootstrapper {
 
         PIXI.loader.add('castle', 'img/castle.png');
         PIXI.loader.add('forest', 'img/forest.png');
+        PIXI.loader.add('town', 'img/town.png');
 
         this.bindEvents();
     }
