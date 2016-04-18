@@ -9,11 +9,15 @@ export default class Map {
         this.pois = [];
         this.displayObject = new PIXI.Container();
 
-        for (let i = 0; i < 3; i++) {
+        let placed = 0;
+        for (let attempts = 0; attempts < 20; attempts++) {
             let poi = new PointOfInterest();
             if (! this.collidesWithExistingPois(poi)) {
                 this.pois.push(poi);
                 this.displayObject.addChild(poi.displayObject);
+                if (placed++ >= 3) {
+                    return false;
+                }
             }
         }
     }
@@ -23,9 +27,12 @@ export default class Map {
             let a = existingPoi.displayObject;
             let b = poi.displayObject;
 
-            // if a width intersects b width
-            // && a height intersects b height
-                // return false
+            if (a.x < b.x + b.width &&
+                a.x + a.width > b.x &&
+                a.y < b.y + b.height &&
+                a.height + a.y > a.y) {
+                return true;
+            }
         }
 
         return false;
